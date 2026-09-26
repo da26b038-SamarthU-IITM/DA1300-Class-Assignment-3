@@ -16,7 +16,21 @@ def surviving_ships(ships: List[int]) -> List[int]:
     Returns:
         List of signed engine powers of surviving ships, left to right.
     """
-    pass
+    for i in range(len(ships)):
+        if i+1!= len(ships):
+            if ships[i]>0 and ships[i+1]<0:
+                if abs(ships[i])>abs(ships[i+1]):
+                    ships=ships[:i+1]+ships[i+2:]
+                    return surviving_ships(ships)
+                elif abs(ships[i])<abs(ships[i+1]):
+                    ships=ships[:i]+ships[i+1:]
+                    return surviving_ships(ships)
+                else:
+                    ships=ships[:i]+ships[i+2:]
+                    return surviving_ships(ships)
+    else:
+        return ships
+pass
 
 
 if __name__ == "__main__":
