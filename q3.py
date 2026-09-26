@@ -7,6 +7,7 @@ class TreeNode:
         self.salary = salary
         self.left = left
         self.right = right
+    
 
 
 def count_fair_managers(root: Optional[TreeNode]) -> int:
@@ -23,7 +24,28 @@ def count_fair_managers(root: Optional[TreeNode]) -> int:
     Returns:
         Number of fair managers in the tree.
     """
-    pass
+    count=0
+    div=0
+    sum=0
+    def subtreecheck(node1=root):
+        if not node1:
+            return 0,0
+        nonlocal count
+        lcount,lsum=subtreecheck(node1.left)
+        rcount,rsum=subtreecheck(node1.right)
+
+        totalsum=lsum+rsum+node1.salary
+        totalcount=lcount+rcount+1
+        if node1.salary==totalsum//totalcount:
+             count+=1
+        return totalcount,totalsum
+
+    subtreecheck(root)
+    return count
+
+
+
+pass
 
 
 if __name__ == "__main__":
