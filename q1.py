@@ -22,6 +22,9 @@ def printer_queue_order(pages: List[int]) -> List[int]:
         L[i]=[i,pages[i]]
     pointer=0
     while L!=[None]*len(pages):
+        if L[pointer]==None:
+            pointer=(pointer+1)%len(pages)
+            continue
         L[pointer][1]-=1
         if L[pointer][1]==0:
             final.append(L[pointer][0])
@@ -37,4 +40,4 @@ pass
 
 if __name__ == "__main__":
     # Example sanity check (see test.py for the real test cases)
-    print(printer_queue_order([1, 1, 1]))  # expected: [0, 1, 2]
+    print(printer_queue_order([6, 5, 4, 3, 2, 1]))  # expected: [0, 1, 2]
