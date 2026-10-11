@@ -1,7 +1,7 @@
 from typing import List
 
 
-def surviving_ships(ships: List[int]) -> List[int]:
+def surviving_ships(ships: List[int],head=0,tail=0) -> List[int]:
     """
     Problem 2: Spaceship collisions.
 
@@ -16,21 +16,20 @@ def surviving_ships(ships: List[int]) -> List[int]:
     Returns:
         List of signed engine powers of surviving ships, left to right.
     """
-    for i in range(len(ships)):
-        if i+1!= len(ships):
-            if ships[i]>0 and ships[i+1]<0:
-                if abs(ships[i])>abs(ships[i+1]):
-                    ships=ships[:i+1]+ships[i+2:]
-                    return surviving_ships(ships)
-                elif abs(ships[i])<abs(ships[i+1]):
-                    ships=ships[:i]+ships[i+1:]
-                    return surviving_ships(ships)
-                else:
-                    ships=ships[:i]+ships[i+2:]
-                    return surviving_ships(ships)
-    else:
-        return ships
-pass
+    shipstack=[]
+    for ship in ships:
+        while shipstack!=[] and ship<0 and shipstack[-1]>0:
+            if abs(shipstack[-1])<abs(ship):
+                shipstack.pop()
+                continue
+            elif abs(shipstack[-1])==abs(ship):
+                shipstack.pop()
+            break
+        else:
+            shipstack.append(ship)
+
+    return shipstack
+            
 
 
 if __name__ == "__main__":
