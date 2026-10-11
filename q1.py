@@ -20,15 +20,17 @@ def printer_queue_order(pages: List[int]) -> List[int]:
     L=[None for i in range (len(pages))]
     for i in range(len(pages)):
         L[i]=[i,pages[i]]
-    while True:
-        if len(L)==0:
-            return final
-        L[0][1]-=1
-        if L[0][1]==0:
-            final.append(L[0][0])
-            L.pop(0)
+    pointer=0
+    while L!=[None]*len(pages):
+        L[pointer][1]-=1
+        if L[pointer][1]==0:
+            final.append(L[pointer][0])
+            L[pointer]=None
+            pointer=(pointer+1)%len(pages)
         else:
-            L=L[1:]+L[0:1]
+            pointer=(pointer+1)%len(pages)
+    return final
+       
        
 pass
 
